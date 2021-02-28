@@ -1,22 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPathing : MonoBehaviour
 {
-    [SerializeField] List<Transform> waypoints;
+    [SerializeField] public WaveConfig waveConfig;
+    List<Vector2> waypoints;
     [SerializeField] float speed = 10F;
 
     int currentTargetIndex = 1;
 
+    private Action onDestroyCallback;
+
     private void Start()
     {
-        transform.position = waypoints[0].position;
+        waypoints = waveConfig.GetPathWaypoints();
+        transform.position = waypoints[0];
     }
 
     private void Update()
     {
-        if (transform.position.Equals(waypoints[currentTargetIndex].position))
+        if (transform.position.Equals(waypoints[currentTargetIndex]))
         {
             currentTargetIndex++;
         }
@@ -27,7 +32,17 @@ public class EnemyPathing : MonoBehaviour
         }
         else
         {
-            transform.position = Vector2.MoveTowards(transform.position, waypoints[currentTargetIndex].position, Time.deltaTime * speed);
+            transform.position = Vector2.MoveTowards(transform.position, waypoints[currentTargetIndex], Time.deltaTime * speed);
         }
+    }
+
+    private void OnDestroy()
+    {
+        onDestroyCallback();
+    }
+
+    public void SetOnDestroyCallback(Action onDestroyCallback)
+    {
+        this.onDestroyCallback = onDestroyCallback;
     }
 }
