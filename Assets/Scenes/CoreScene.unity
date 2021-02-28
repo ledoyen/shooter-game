@@ -469,6 +469,9 @@ MonoBehaviour:
   moveSpeed: 10
   shipWingWidth: 0.2
   topInaccesibleScreenPortion: 0.33
+  laserPrefab: {fileID: 4127049409826256298, guid: a6729ba9111cb1a408219b87d4ea1083, type: 3}
+  timeBetweenFires: 0.2
+  laserSpeed: 10
 --- !u!1 &1770911611
 GameObject:
   m_ObjectHideFlags: 0
